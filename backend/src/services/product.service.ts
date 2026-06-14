@@ -23,7 +23,8 @@ export class ProductService {
       where,
       include: {
         category: true,
-        stockRecords: { include: { warehouse: true, shelf: true } }
+        stockRecords: { include: { warehouse: true, shelf: true } },
+        suppliers: { include: { supplier: true } }
       },
       orderBy: { createdAt: "desc" }
     });
@@ -31,7 +32,8 @@ export class ProductService {
     return products.map((product) => ({
       ...product,
       totalStock: product.stockRecords.reduce((sum, item) => sum + item.quantity, 0),
-      stockWarning: product.stockRecords.reduce((sum, item) => sum + item.quantity, 0) < product.minStock
+      stockWarning: product.stockRecords.reduce((sum, item) => sum + item.quantity, 0) < product.minStock,
+      supplierList: product.suppliers.map((ps) => ps.supplier)
     }));
   }
 
@@ -41,7 +43,8 @@ export class ProductService {
       include: {
         category: true,
         stockRecords: { include: { warehouse: true, shelf: true } },
-        orderItems: { include: { order: true }, orderBy: { createdAt: "desc" }, take: 10 }
+        orderItems: { include: { order: true }, orderBy: { createdAt: "desc" }, take: 10 },
+        suppliers: { include: { supplier: true } }
       }
     });
     if (!product) {
@@ -49,7 +52,8 @@ export class ProductService {
     }
     return {
       ...product,
-      totalStock: product.stockRecords.reduce((sum, item) => sum + item.quantity, 0)
+      totalStock: product.stockRecords.reduce((sum, item) => sum + item.quantity, 0),
+      supplierList: product.suppliers.map((ps) => ps.supplier)
     };
   }
 

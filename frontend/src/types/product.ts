@@ -1,5 +1,6 @@
 import type { Category } from "./index";
 import type { StockRecord } from "./stock";
+import type { Supplier } from "./supplier";
 
 export interface Product {
   id: string;
@@ -20,4 +21,5 @@ export interface Product {
   stockRecords?: StockRecord[];
   totalStock?: number;
   stockWarning?: boolean;
+  supplierList?: Supplier[];
 }

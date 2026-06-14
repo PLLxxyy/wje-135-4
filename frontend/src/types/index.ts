@@ -26,3 +26,4 @@ export * from "./warehouse";
 export * from "./product";
 export * from "./stock";
 export * from "./order";
+export * from "./supplier";

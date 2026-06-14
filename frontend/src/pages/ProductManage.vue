@@ -75,6 +75,13 @@ async function selectProduct(row: Product) {
         <el-table-column prop="quantity" label="数量" />
       </el-table>
       <EmptyState v-else title="暂无库存记录" />
+      <div class="panel-title" style="margin-top: 18px"><h2>关联供应商</h2></div>
+      <el-table v-if="selectedProduct?.supplierList?.length" :data="selectedProduct.supplierList">
+        <el-table-column prop="name" label="供应商" />
+        <el-table-column prop="contactPerson" label="联系人" />
+        <el-table-column prop="contactPhone" label="电话" />
+      </el-table>
+      <EmptyState v-else title="暂无关联供应商" />
     </aside>
   </section>
 </template>

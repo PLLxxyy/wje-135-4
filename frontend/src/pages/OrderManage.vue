@@ -8,21 +8,24 @@ import { OrderType } from "../types/enums";
 import { useOrderStore } from "../stores/orderStore";
 import { useProductStore } from "../stores/productStore";
 import { useWarehouseStore } from "../stores/warehouseStore";
+import { useSupplierStore } from "../stores/supplierStore";
 
 const orderStore = useOrderStore();
 const productStore = useProductStore();
 const warehouseStore = useWarehouseStore();
+const supplierStore = useSupplierStore();
 const activeType = ref("");
 const form = reactive({
   type: OrderType.Inbound,
   targetWarehouseId: "",
   sourceWarehouseId: "",
+  supplierId: "",
   remark: "",
   items: [{ productId: "", shelfId: "", quantity: 1, actualQuantity: 1 }]
 });
 
 onMounted(async () => {
-  await Promise.all([orderStore.fetchOrders(), orderStore.fetchLogs(), productStore.fetchProducts(), warehouseStore.fetchWarehouses()]);
+  await Promise.all([orderStore.fetchOrders(), orderStore.fetchLogs(), productStore.fetchProducts(), warehouseStore.fetchWarehouses(), supplierStore.fetchSuppliers()]);
   form.targetWarehouseId = warehouseStore.warehouses[0]?.id || "";
 });
 
@@ -40,6 +43,7 @@ async function submitOrder() {
     ...form,
     sourceWarehouseId: form.sourceWarehouseId || undefined,
     targetWarehouseId: form.targetWarehouseId || undefined,
+    supplierId: form.supplierId || undefined,
     items: form.items.filter((item) => item.productId)
   };
   await stockOrderApi.create(payload);
@@ -69,6 +73,9 @@ async function submitOrder() {
         <el-table-column prop="status" label="状态" width="110">
           <template #default="{ row }"><StatusBadge :value="row.status" /></template>
         </el-table-column>
+        <el-table-column label="供应商" width="130">
+          <template #default="{ row }">{{ row.supplier?.name || "-" }}</template>
+        </el-table-column>
         <el-table-column label="明细" width="90">
           <template #default="{ row }">{{ row.items?.length || 0 }} 行</template>
         </el-table-column>
@@ -90,6 +97,11 @@ async function submitOrder() {
         <el-form-item label="目标仓库">
           <el-select v-model="form.targetWarehouseId">
             <el-option v-for="warehouse in warehouseStore.warehouses" :key="warehouse.id" :label="warehouse.name" :value="warehouse.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="来源供应商">
+          <el-select v-model="form.supplierId" clearable placeholder="可选，选择供应商">
+            <el-option v-for="supplier in supplierStore.suppliers" :key="supplier.id" :label="supplier.name" :value="supplier.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="备注">

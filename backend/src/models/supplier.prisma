@@ -1,0 +1,9 @@
+model Supplier {
+  id            String  @id @default(cuid())
+  name          String
+  contactPerson String?
+  contactPhone  String?
+  email         String?
+  address       String?
+  remark        String?
+}

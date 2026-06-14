@@ -1,0 +1,7 @@
+model ProductSupplier {
+  id         String @id @default(cuid())
+  productId  String
+  supplierId String
+
+  @@unique([productId, supplierId])
+}

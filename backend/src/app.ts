@@ -9,6 +9,7 @@ import productRoutes from "./routes/product.routes";
 import stockOrderRoutes from "./routes/stockOrder.routes";
 import stockRecordRoutes from "./routes/stockRecord.routes";
 import warehouseRoutes from "./routes/warehouse.routes";
+import supplierRoutes from "./routes/supplier.routes";
 import { ok } from "./utils/response";
 
 export function createApp() {
@@ -27,6 +28,7 @@ export function createApp() {
   app.use("/api/stock-records", stockRecordRoutes);
   app.use("/api/orders", stockOrderRoutes);
   app.use("/api/categories", categoryRoutes);
+  app.use("/api/suppliers", supplierRoutes);
 
   app.use(notFoundMiddleware);
   app.use(errorHandlerMiddleware);

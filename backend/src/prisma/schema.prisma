@@ -110,6 +110,31 @@ model Category {
   updatedAt DateTime  @updatedAt
 }
 
+model Supplier {
+  id            String            @id @default(cuid())
+  name          String
+  contactPerson String?
+  contactPhone  String?
+  email         String?
+  address       String?
+  remark        String?
+  productSuppliers ProductSupplier[]
+  orders        StockOrder[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+model ProductSupplier {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([productId, supplierId])
+}
+
 model Product {
   id            String        @id @default(cuid())
   name          String
@@ -129,6 +154,7 @@ model Product {
   stockRecords  StockRecord[]
   orderItems    StockOrderItem[]
   operationLogs OperationLog[]
+  suppliers     ProductSupplier[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 }
@@ -161,6 +187,8 @@ model StockOrder {
   sourceWarehouse    Warehouse?      @relation("SourceWarehouse", fields: [sourceWarehouseId], references: [id])
   targetWarehouseId  String?
   targetWarehouse    Warehouse?      @relation("TargetWarehouse", fields: [targetWarehouseId], references: [id])
+  supplierId         String?
+  supplier           Supplier?       @relation(fields: [supplierId], references: [id])
   status             OrderStatus     @default(Draft)
   createdById        String
   createdBy          User            @relation("CreatedOrders", fields: [createdById], references: [id])

@@ -4,6 +4,7 @@ model StockOrder {
   type              OrderType
   sourceWarehouseId String?
   targetWarehouseId String?
+  supplierId        String?
   status            OrderStatus @default(Draft)
   createdById       String
   approvedById      String?

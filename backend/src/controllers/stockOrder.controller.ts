@@ -24,6 +24,7 @@ export class StockOrderController {
         type: req.body.type,
         sourceWarehouseId: req.body.sourceWarehouseId,
         targetWarehouseId: req.body.targetWarehouseId,
+        supplierId: req.body.supplierId,
         createdById: req.user?.id === "system" || !req.user?.id ? req.body.createdById : req.user.id,
         remark: req.body.remark,
         items: req.body.items || []

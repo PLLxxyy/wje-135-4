@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { DataAnalysis, Goods, House, List, Memo } from "@element-plus/icons-vue";
+import { DataAnalysis, Goods, House, List, Memo, Phone } from "@element-plus/icons-vue";
 import { useWarehouseStore } from "./stores/warehouseStore";
 
 const route = useRoute();
@@ -35,6 +35,10 @@ onMounted(() => {
         <el-menu-item index="/products">
           <el-icon><Goods /></el-icon>
           <span>商品管理</span>
+        </el-menu-item>
+        <el-menu-item index="/suppliers">
+          <el-icon><Phone /></el-icon>
+          <span>供应商管理</span>
         </el-menu-item>
         <el-menu-item index="/orders">
           <el-icon><List /></el-icon>

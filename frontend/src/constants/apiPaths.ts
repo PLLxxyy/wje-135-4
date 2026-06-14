@@ -6,5 +6,6 @@ export const API_PATHS = {
   categories: "/api/categories",
   stockRecords: "/api/stock-records",
   orders: "/api/orders",
-  operationLogs: "/api/orders/operation-logs"
+  operationLogs: "/api/orders/operation-logs",
+  suppliers: "/api/suppliers"
 } as const;

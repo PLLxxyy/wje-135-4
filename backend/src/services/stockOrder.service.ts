@@ -13,6 +13,7 @@ export class StockOrderService {
         targetWarehouse: true,
         createdBy: true,
         approvedBy: true,
+        supplier: true,
         items: { include: { product: true, shelf: true } }
       },
       orderBy: { createdAt: "desc" }
@@ -27,6 +28,7 @@ export class StockOrderService {
         targetWarehouse: true,
         createdBy: true,
         approvedBy: true,
+        supplier: true,
         items: { include: { product: true, shelf: true } },
         operationLogs: { orderBy: { createdAt: "desc" } }
       }
@@ -41,6 +43,7 @@ export class StockOrderService {
     type: OrderType;
     sourceWarehouseId?: string;
     targetWarehouseId?: string;
+    supplierId?: string;
     createdById: string;
     remark?: string;
     items: { productId: string; shelfId?: string; quantity: number; actualQuantity?: number }[];
@@ -54,11 +57,12 @@ export class StockOrderService {
         type: data.type,
         sourceWarehouseId: data.sourceWarehouseId,
         targetWarehouseId: data.targetWarehouseId,
+        supplierId: data.supplierId,
         createdById: data.createdById,
         remark: data.remark,
         items: { create: data.items }
       },
-      include: { items: { include: { product: true, shelf: true } }, targetWarehouse: true, sourceWarehouse: true }
+      include: { items: { include: { product: true, shelf: true } }, targetWarehouse: true, sourceWarehouse: true, supplier: true }
     });
   }
 

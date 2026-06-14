@@ -1,6 +1,7 @@
 import { OrderStatus, OrderType, OperationType } from "./enums";
 import type { Product } from "./product";
 import type { Shelf, Warehouse } from "./warehouse";
+import type { Supplier } from "./supplier";
 
 export interface StockOrderItem {
   id?: string;
@@ -20,6 +21,8 @@ export interface StockOrder {
   sourceWarehouse?: Warehouse;
   targetWarehouseId?: string;
   targetWarehouse?: Warehouse;
+  supplierId?: string;
+  supplier?: Supplier;
   status: OrderStatus;
   createdById: string;
   approvedById?: string;
